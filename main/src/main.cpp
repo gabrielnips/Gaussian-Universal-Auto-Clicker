@@ -1,4 +1,5 @@
-#include "Stdafx.hpp"
+#include "Stdafx.cpp"
+
 #include "Core/Application.hpp"
 #include "Services/ConsoleService.hpp"
 #include "Services/TargetWindowService.hpp"

@@ -1,7 +1,5 @@
 #pragma once
-
 #include "Interfaces/IInputService.hpp"
-#include "Stdafx.hpp"
 
 class InputService : public IInputService
 {

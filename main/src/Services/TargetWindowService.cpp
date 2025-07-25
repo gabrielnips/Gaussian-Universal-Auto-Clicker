@@ -1,3 +1,4 @@
+#include "Stdafx.cpp"
 #include "Services/TargetWindowService.hpp"
 
 BOOL CALLBACK TargetWindowService::EnumWindowsProc( HWND hwnd, LPARAM lParam )

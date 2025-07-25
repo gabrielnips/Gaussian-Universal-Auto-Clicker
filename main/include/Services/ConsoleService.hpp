@@ -1,7 +1,5 @@
 #pragma once
-
 #include "Interfaces/IConsoleService.hpp"
-#include "Stdafx.hpp"
 
 namespace ConsoleColors
 {
@@ -28,4 +26,8 @@ public:
     std::string VirtualKeyToString( int vkCode ) const override;
     void ClearScreen( ) const override;
     void DrawHeader( ) const override;
+
+    ClickingMode SelectClickingMode( ) const override;
+    RECT DefineClickArea( ) const override;
+    void PrintSettings( const AppSettings& settings, const std::string& windowTitle ) const override;
 };

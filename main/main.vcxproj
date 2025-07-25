@@ -74,12 +74,12 @@
     <OutDir>$(SolutionDir)build\$(Platform) - $(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform) - $(Configuration)\</IntDir>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(ProjectDir)src\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)thirdparty\include;$(ProjectDir)src\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)build\$(Platform) - $(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform) - $(Configuration)\</IntDir>
-    <IncludePath>$(ProjectDir)src\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)thirdparty\include;$(ProjectDir)src\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Application.hpp" />
+    <ClInclude Include="include\Core\AppSettings.hpp" />
     <ClInclude Include="include\Globals.hpp" />
     <ClInclude Include="include\Interfaces\IClickerService.hpp" />
     <ClInclude Include="include\Interfaces\IConsoleService.hpp" />

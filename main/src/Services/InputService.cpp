@@ -1,3 +1,4 @@
+#include "Stdafx.cpp"
 #include "Services/InputService.hpp"
 
 void InputService::SetActivationKey( int vkCode )

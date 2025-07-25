@@ -1,7 +1,5 @@
 #pragma once
-
 #include "Interfaces/ITargetWindowService.hpp"
-#include "Stdafx.hpp"
 
 class TargetWindowService : public ITargetWindowService
 {

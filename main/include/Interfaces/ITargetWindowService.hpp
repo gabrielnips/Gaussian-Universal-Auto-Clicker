@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Stdafx.hpp"
-
 struct WindowInfo
 {
     HWND handle;
