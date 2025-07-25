@@ -1,0 +1,29 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.vcxproj.user
+
+# Build output
+build/
+Build/
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+
+# Compiled files
+*.exe
+*.dll
+*.lib
+*.ilk
+*.pdb
+*.obj
+*.objd
+*.tlog
+*.pch
+
+# Other
+*.log
