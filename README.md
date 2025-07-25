@@ -9,6 +9,10 @@ A modern, console-based auto-clicker for Windows written in C++. This applicatio
 
 -   **Custom Activation Key**: Set any keyboard key or mouse button (including Mouse4/Mouse5) as the clicker's trigger.
 -   **Selectable Activation Mode (Toggle/Hold)**: Choose whether to hold the key to click or toggle the clicker on and off with a single press.
+-   **Defined Click Area**: Press a hotkey (**F6**) to define a specific rectangular area on the screen. When active, all clicks are randomized within this box.
+-   **Clipboard Configuration**: Instantly save and load your settings using hotkeys.
+    -   **F8** to export the current configuration to the clipboard.
+    -   **F7** to import a configuration from the clipboard.
 -   **Configurable Mouse Jitter**: Add a slight mouse shake effect to simulate human-like hand movement, with intensity adjustable from 0 (off) to 10.
 -   **Gaussian Randomization**: Clicks are not timed uniformly. They follow a normal distribution based on your configured min/max CPS.
 -   **Window Targeting**: The auto-clicker will only activate when a specific, user-selected window is in the foreground.
