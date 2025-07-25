@@ -7,11 +7,14 @@ A modern, console-based auto-clicker for Windows written in C++. This applicatio
 
 ## Features
 
-- **Custom Activation Key**: Set any keyboard key or mouse button (including Mouse4/Mouse5) as the clicker's trigger.
-- **Gaussian Randomization**: Clicks are not timed uniformly. They follow a normal distribution based on your configured min/max CPS.
-- **Window Targeting**: The auto-clicker will only activate when a specific, user-selected window is in the foreground.
-- **Modern C++ Architecture**: Built using dependency injection principles for a clean, organized, and extensible codebase.
-- **Fixed Console UI**: The console window has a fixed size and cannot be resized, ensuring a consistent user interface.
+-   **Custom Activation Key**: Set any keyboard key or mouse button (including Mouse4/Mouse5) as the clicker's trigger.
+-   **Selectable Activation Mode (Toggle/Hold)**: Choose whether to hold the key to click or toggle the clicker on and off with a single press.
+-   **Configurable Mouse Jitter**: Add a slight mouse shake effect to simulate human-like hand movement, with intensity adjustable from 0 (off) to 10.
+-   **Gaussian Randomization**: Clicks are not timed uniformly. They follow a normal distribution based on your configured min/max CPS.
+-   **Window Targeting**: The auto-clicker will only activate when a specific, user-selected window is in the foreground.
+-   **Modern C++ Architecture**: Built using dependency injection principles for a clean, organized, and extensible codebase.
+-   **Fixed Console UI**: The console window has a fixed size and cannot be resized, ensuring a consistent user interface.
+
 
 ## Building from Source
 
