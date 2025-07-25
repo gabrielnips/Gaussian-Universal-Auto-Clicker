@@ -36,19 +36,39 @@ void ConsoleService::PrintPrompt( const std::string& message ) const
     SetColor( ConsoleColors::WHITE );
 }
 
-int ConsoleService::GetIntegerInput( ) const
+int ConsoleService::GetIntegerInput( int min, int max ) const
 {
     int value;
-    while ( !( std::cin >> value ) )
+    while ( true )
     {
+        std::cin >> value;
+        if ( std::cin.good( ) && value >= min && value <= max )
+        {
+            std::cin.ignore( std::numeric_limits<std::streamsize>::max( ), '\n' );
+            return value;
+        }
         std::cin.clear( );
         std::cin.ignore( std::numeric_limits<std::streamsize>::max( ), '\n' );
-        PrintMessage( "Invalid input. Please enter a whole number.", ConsoleColors::RED );
+        PrintMessage( "Invalid input. Please enter a number between " + std::to_string( min ) + " and " + std::to_string( max ) + ".", ConsoleColors::RED );
         PrintPrompt( ">> " );
     }
-    std::cin.ignore( std::numeric_limits<std::streamsize>::max( ), '\n' );
-    return value;
 }
+
+ActivationMode ConsoleService::SelectActivationMode( ) const
+{
+    PrintMessage( "\nSelect activation mode:", ConsoleColors::CYAN );
+    std::cout << "  [1] Hold (Click while key is pressed)\n";
+    std::cout << "  [2] Toggle (Press key to turn on/off)\n";
+
+    while ( true )
+    {
+        PrintPrompt( ">> " );
+        int choice = GetIntegerInput( 1, 2 );
+        if ( choice == 1 ) return ActivationMode::HOLD;
+        if ( choice == 2 ) return ActivationMode::TOGGLE;
+    }
+}
+
 
 HWND ConsoleService::SelectWindow( const std::vector<WindowInfo>& windows ) const
 {
@@ -57,12 +77,11 @@ HWND ConsoleService::SelectWindow( const std::vector<WindowInfo>& windows ) cons
     {
         std::cout << "  [" << i << "] " << windows[i].title << std::endl;
     }
-
     int choice = -1;
     while ( choice < 0 || static_cast<size_t>( choice ) >= windows.size( ) )
     {
         PrintPrompt( "\nSelect target window number >> " );
-        choice = GetIntegerInput( );
+        choice = GetIntegerInput( 0, windows.size( ) - 1 );
     }
     return windows[choice].handle;
 }
@@ -97,14 +116,12 @@ int ConsoleService::CaptureKey( ) const
         {
             if ( GetAsyncKeyState( i ) & 0x8000 )
             {
-                anyKeyDown = true;
-                break;
+                anyKeyDown = true; break;
             }
         }
         if ( !anyKeyDown ) break;
         std::this_thread::sleep_for( std::chrono::milliseconds( 50 ) );
     }
-
     while ( true )
     {
         for ( int i = 1; i < 255; i++ )

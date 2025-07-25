@@ -5,8 +5,26 @@ void InputService::SetActivationKey( int vkCode )
     activationKey = vkCode;
 }
 
-bool InputService::IsActivationKeyDown( ) const
+void InputService::SetActivationMode( ActivationMode newMode )
+{
+    mode = newMode;
+}
+
+bool InputService::IsActive( )
 {
     if ( activationKey == 0 ) return false;
-    return ( GetAsyncKeyState( activationKey ) & 0x8000 ) != 0;
+
+    bool isKeyDown = ( GetAsyncKeyState( activationKey ) & 0x8000 ) != 0;
+
+    if ( mode == ActivationMode::HOLD )
+    {
+        return isKeyDown;
+    }
+
+    if ( isKeyDown && !keyWasDown )
+    {
+        toggledOn = !toggledOn;
+    }
+    keyWasDown = isKeyDown;
+    return toggledOn;
 }

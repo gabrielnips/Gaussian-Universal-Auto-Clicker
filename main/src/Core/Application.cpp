@@ -31,25 +31,29 @@ void Application::Start( )
 
     int activationKey = console->CaptureKey( );
     inputService->SetActivationKey( activationKey );
-
-    console->ClearScreen( );
-    console->DrawHeader( );
     console->PrintMessage( "Activation key set to: " + console->VirtualKeyToString( activationKey ), ConsoleColors::GREEN );
+
+    ActivationMode mode = console->SelectActivationMode( );
+    inputService->SetActivationMode( mode );
 
     try
     {
         console->PrintPrompt( "\nEnter minimum CPS >> " );
-        int minCPS = console->GetIntegerInput( );
+        int minCPS = console->GetIntegerInput( 1, 1000 );
 
         console->PrintPrompt( "Enter maximum CPS >> " );
-        int maxCPS = console->GetIntegerInput( );
+        int maxCPS = console->GetIntegerInput( minCPS, 1000 );
 
-        clickerService = std::make_unique<ClickerService>( minCPS, maxCPS, inputService, windowService );
+        console->PrintPrompt( "Enter jitter intensity (0-10, 0 to disable) >> " );
+        int jitter = console->GetIntegerInput( 0, 10 );
+
+        clickerService = std::make_unique<ClickerService>( minCPS, maxCPS, jitter, inputService, windowService );
 
         console->ClearScreen( );
         console->DrawHeader( );
         console->PrintMessage( "Configuration set. Clicker is active.", ConsoleColors::GREEN );
-        console->PrintMessage( "Hold [" + console->VirtualKeyToString( activationKey ) + "] in the target window to click.", ConsoleColors::YELLOW );
+        std::string modeStr = ( mode == ActivationMode::HOLD ) ? "Hold" : "Toggle";
+        console->PrintMessage( "Mode: " + modeStr + " | Key: [" + console->VirtualKeyToString( activationKey ) + "]", ConsoleColors::YELLOW );
         console->PrintMessage( "\nPress ENTER in this console to exit.", ConsoleColors::WHITE );
 
         std::thread clickerThread( &IClickerService::Run, clickerService.get( ) );

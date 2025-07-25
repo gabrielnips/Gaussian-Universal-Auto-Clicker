@@ -21,9 +21,10 @@ public:
     ConsoleService( );
     void PrintMessage( const std::string& message, WORD color ) const override;
     void PrintPrompt( const std::string& message ) const override;
-    int GetIntegerInput( ) const override;
+    int GetIntegerInput( int min, int max ) const override;
     HWND SelectWindow( const std::vector<WindowInfo>& windows ) const override;
     int CaptureKey( ) const override;
+    ActivationMode SelectActivationMode( ) const override;
     std::string VirtualKeyToString( int vkCode ) const override;
     void ClearScreen( ) const override;
     void DrawHeader( ) const override;
