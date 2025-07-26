@@ -5,32 +5,59 @@
 #include "Services/TargetWindowService.hpp"
 #include "Services/InputService.hpp"
 
-void ConfigureConsoleWindow( )
+bool ConfigureConsoleWindow( )
 {
-	HWND consoleWindow = GetConsoleWindow( );
+	constexpr short width  = 75;
+	constexpr short height = 20;
+
+	const HWND consoleWindow = GetConsoleWindow( );
 	if ( consoleWindow == nullptr )
 	{
-		return;
+		return false;
 	}
 
-	LONG style = GetWindowLong( consoleWindow, GWL_STYLE );
-	style      = style & ~( WS_MAXIMIZEBOX ) & ~( WS_THICKFRAME );
-	SetWindowLong( consoleWindow, GWL_STYLE, style );
+	const LONG currentStyle = GetWindowLong( consoleWindow, GWL_STYLE );
+	SetWindowLong( consoleWindow, GWL_STYLE, currentStyle & ~WS_MAXIMIZEBOX & ~WS_THICKFRAME );
 
-	HANDLE hConsole = GetStdHandle( STD_OUTPUT_HANDLE );
-	if ( hConsole == INVALID_HANDLE_VALUE )
+	const HANDLE hConsoleOutput = GetStdHandle( STD_OUTPUT_HANDLE );
+	if ( hConsoleOutput == INVALID_HANDLE_VALUE )
 	{
-		return;
+		return false;
 	}
 
-	constexpr short windowWidth  = 75;
-	constexpr short windowHeight = 20;
+	constexpr COORD bufferSize = { width, height };
+	if ( !SetConsoleScreenBufferSize( hConsoleOutput, bufferSize ) )
+	{
+		return false;
+	}
 
-	COORD bufferSize = { windowWidth, windowHeight };
-	SetConsoleScreenBufferSize( hConsole, bufferSize );
+	constexpr SMALL_RECT windowRect = { 0, 0, width - 1, height - 1 };
+	if ( !SetConsoleWindowInfo( hConsoleOutput, TRUE, &windowRect ) )
+	{
+		return false;
+	}
 
-	SMALL_RECT windowRect = { 0, 0, windowWidth - 1, windowHeight - 1 };
-	SetConsoleWindowInfo( hConsole, TRUE, &windowRect );
+	const HANDLE hConsoleInput = GetStdHandle( STD_INPUT_HANDLE );
+	if ( hConsoleInput == INVALID_HANDLE_VALUE )
+	{
+		return false;
+	}
+
+	DWORD consoleMode;
+	if ( !GetConsoleMode( hConsoleInput, &consoleMode ) )
+	{
+		return false;
+	}
+
+	consoleMode &= ~ENABLE_QUICK_EDIT_MODE;
+	consoleMode |= ENABLE_EXTENDED_FLAGS;
+
+	if ( !SetConsoleMode( hConsoleInput, consoleMode ) )
+	{
+		return false;
+	}
+
+	return true;
 }
 
 int main( )
